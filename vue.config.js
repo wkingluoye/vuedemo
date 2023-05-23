@@ -8,7 +8,7 @@ module.exports = defineConfig({
         },
         answer:{
             entry:'./src/answer.js',
-            title:'答题器'
+            title:'星辰答题器'
         }
     },
     publicPath: process.env.NODE_ENV === 'production'

@@ -1,13 +1,18 @@
 <template>
-<!--  左侧装备显示区-->
+  <div><h1>星辰答题器</h1>
+  <div class="author">
+    <h2>By： 星辰千年  开天  HelloWorld</h2>
+
+  </div></div>
   <div class="question-wrapper">
-    <el-input v-model="keyword" placeholder="Please input" @input="onSearch" clearable :disabled="!isHasData" :prefix-icon="Search"/>
+    <el-input v-model="keyword" class="w-50 m-2" placeholder="Please input" @input="onSearch" clearable :disabled="!isHasData" :prefix-icon="Search"/>
+
   </div>
   <div class="search-result">
     <ul>
       <template v-for="item in resultList" :key="item.question">
         <li>
-          问：{{ item.question}} 答：{{ item.answer }}
+          问：{{ item.question}} <br/>答：<span class="answer-color">{{ item.answer }}</span>
         </li>
       </template>
     </ul>
@@ -126,7 +131,7 @@ function mkRslt(arr){
 
 function getPinyin(ss){
   var str = ss.trim();
-  if(str != ""){
+  if(str !== ""){
     var arrRslt = makePy(str);
     return arrRslt[0];
   }else{    return "";    }
@@ -138,6 +143,18 @@ function getPinyin(ss){
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.author {
+  width: 600px;
+  box-sizing: border-box;
+  padding: 12px;
+  color: transparent;
+  display: flex;
+  margin-left: auto;
+}
+
+h2 {
+  color:#eb8e55;
+}
 .question-wrapper{
   padding-left: 18px;
   padding-right: 18px;
@@ -148,7 +165,9 @@ function getPinyin(ss){
   padding-right: 18px;
   text-align: left;
 }
-
+.answer-color{
+  color:red;
+}
 
 
 
