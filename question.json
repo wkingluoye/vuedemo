@@ -8,5 +8,10 @@
     "question": "q002",
     "options": ["A","B","C","d"],
     "answer": "A"
+  },
+  {
+    "question": "小鸡是鸡吗",
+    "options": ["A","B","C","d"],
+    "answer": "是的"
   }
 ]

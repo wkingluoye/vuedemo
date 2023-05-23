@@ -1,17 +1,14 @@
 <template>
-  <UseManual/>
-  <ContentShow/>
+  <InputQuestion/>
 </template>
 
 <script>
-import UseManual from './components/UseManual.vue'
-import ContentShow from './components/ContentShow.vue'
+import InputQuestion from './components/InputQuestion.vue'
 
 export default {
   name: 'App',
   components: {
-    UseManual,
-    ContentShow
+    InputQuestion,
   }
 }
 </script>

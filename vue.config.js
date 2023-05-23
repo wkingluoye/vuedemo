@@ -5,6 +5,10 @@ module.exports = defineConfig({
         index:{
             entry:'./src/main.js',
             title:'装备灵魂五行模拟器'
+        },
+        answer:{
+            entry:'./src/answer.js',
+            title:'答题器'
         }
     },
     publicPath: process.env.NODE_ENV === 'production'
