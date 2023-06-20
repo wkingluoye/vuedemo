@@ -5,14 +5,14 @@
 
   </div></div>
   <div class="question-wrapper">
-    <el-input v-model="keyword" class="w-50 m-2" placeholder="Please input" @input="onSearch" clearable :disabled="!isHasData" :prefix-icon="Search"/>
+    <el-input v-model="keyword" class="w-50 m-2" placeholder="Please input" @input="onSearch" clearable :disabled="!isHasData" :prefix-icon="Search" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'')"/>
 
   </div>
   <div class="search-result">
     <ul>
       <template v-for="item in resultList" :key="item.question">
         <li>
-          问：{{ item.question}} <br/>答：<span class="answer-color">{{ item.answer }}</span>
+          问：{{item.question.substr(0,item.keyIndex)}}<span class="mark-color">{{item.question.substr(item.keyIndex,item.keyLen)}}</span>{{item.question.substr(item.keyIndex + item.keyLen)}} <br/>答：<span class="answer-color">{{ item.answer }}</span>
         </li>
       </template>
     </ul>
@@ -31,41 +31,64 @@ export default {
     keyword:"",
     questionUrl:"https://raw.githubusercontent.com/wkingluoye/vuedemo/master/question.json",
     isHasData:false,
-    resultList:[]
+    resultList:[],
+    isDebug:'development' === process.env.NODE_ENV
   }},
   created(){
-    console.log("页面开始创建中")
+    this.showLog("页面开始创建中")
   },
   mounted(){
-    console.log('Mounted!')
+    this.showLog('Mounted!')
     this.getRemoteQuestionList()
   },
   methods: {
     getRemoteQuestionList() {
-      console.log('getRemoteQuestionList!')
-      this.axios.get(this.questionUrl).then(res=>{console.log(res);this.questionList = res.data;console.log(this.questionList);this.isHasData=true;console.log(this.isHasData = true)})
+      this.showLog('getRemoteQuestionList!')
+      this.axios.get(this.questionUrl)
+          .then(res=>{
+            this.showLog(res);
+            this.questionList = res.data;
+            for(let i=0;i<this.questionList.length;i++){
+              let questionPY = getPinyin(this.questionList[i].question).toUpperCase()
+              this.questionList[i].questionPY = questionPY
+            }
+            this.showLog(this.questionList);
+            this.isHasData=true;
+            this.showLog(this.isHasData = true)
+        })
     },
     onSearch(v){
-      console.log(getPinyin(v).toUpperCase())
+      this.showLog(getPinyin(v).toUpperCase())
       v = v.trim()
       if (v.length < 2){
         this.resultList = []
         return
       }
-      console.log("长度通过：" + this.questionList.length + ",key:" + this.keyword)
+      this.showLog("长度通过：" + this.questionList.length + ",key:" + this.keyword)
       let tmpList = []
       let keyPY = getPinyin(this.keyword).toUpperCase()
-      console.log(keyPY)
       for(let i=0;i<this.questionList.length;i++){
-        let questionPY = getPinyin(this.questionList[i].question).toUpperCase()
-        console.log(questionPY,keyPY)
-        if (questionPY.indexOf(keyPY) > -1){
-          tmpList.push(this.questionList[i])
+        let searchIndex = this.questionList[i].questionPY.indexOf(keyPY)
+        if ( searchIndex > -1){
+          this.showLog(this.questionList[i].questionPY,keyPY,keyPY.length,searchIndex)
+          let question = this.questionList[i]
+          question.keyLen = keyPY.length
+          question.keyIndex = searchIndex
+          tmpList.push(question)
         }
       }
       this.resultList = tmpList
+      // this.showLog(tmpList)
     },
-
+    brightenKeyword(val,index,len){
+      // this.showLog("brightenKeyword:" + val,index,len);
+      return val.substr(0,index) + '<span class="mark-color">' + val.substr(index,len) + '</span>' + val.substr(index+len);
+      },
+    showLog(...optionalParams){
+      if(this.isDebug){
+        console.log(optionalParams)
+      }
+    }
 
   }
 }
@@ -126,9 +149,6 @@ function mkRslt(arr){
   }
   return arrRslt;
 }
-
-
-
 function getPinyin(ss){
   var str = ss.trim();
   if(str !== ""){
@@ -167,6 +187,10 @@ h2 {
 }
 .answer-color{
   color:red;
+}
+.mark-color{
+  color:#6a5acd;
+  font-weight: bold;
 }
 
 
