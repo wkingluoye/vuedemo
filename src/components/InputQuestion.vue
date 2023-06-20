@@ -80,10 +80,6 @@ export default {
       this.resultList = tmpList
       // this.showLog(tmpList)
     },
-    brightenKeyword(val,index,len){
-      // this.showLog("brightenKeyword:" + val,index,len);
-      return val.substr(0,index) + '<span class="mark-color">' + val.substr(index,len) + '</span>' + val.substr(index+len);
-      },
     showLog(...optionalParams){
       if(this.isDebug){
         console.log(optionalParams)
