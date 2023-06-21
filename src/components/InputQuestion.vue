@@ -11,6 +11,7 @@
   >
     <template #content>
       只需要输入拼音首字母，不分大小写，最少2个
+      <br>目前收集共【<span style='color:#c90fde'>{{questionList.length}}</span>】题
     </template>
       <el-input v-model="keyword" class="w-50 m-2" placeholder="Please input" @input="onSearch" clearable :disabled="!isHasData" :prefix-icon="Search" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'')"/>
     </el-tooltip>
