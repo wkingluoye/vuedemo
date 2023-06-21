@@ -47,4 +47,3 @@ jobs:
           deploy_key: ${{ secrets.VUE_DEMO_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./dist
-          CNAME: vben.vvbin.cn
