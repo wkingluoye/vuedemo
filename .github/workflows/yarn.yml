@@ -10,38 +10,50 @@ on:
       - master
 
 jobs:
-  - name: Set SSH Environment
-      env:
-        DOCS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-      run: |
-        mkdir -p ~/.ssh/
-        echo "VUE_DEMO_TOKEN" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan github.com > ~/.ssh/known_hosts
-        chmod 700 ~/.ssh && chmod 600 ~/.ssh/*
-        git config --global user.email "wkingluoye@163.com"
-        git config --global user.name "wkingluoye"
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: yarn
-      - run: yarn install --frozen-lockfile
-      - run: yarn build
+#
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-node@v3
+#        with:
+#          node-version: 16
+#          cache: yarn
+#      - run: yarn install --frozen-lockfile
+#      - run: yarn build
 
-  deploy:
+  push-to-gh-pages:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Nodejs
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: "16.x"
           cache: yarn
+
+      - name: Set SSH Environment
+          env:
+            DOCS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          run: |
+            mkdir -p ~/.ssh/
+            echo "VUE_DEMO_TOKEN" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan github.com > ~/.ssh/known_hosts
+            chmod 700 ~/.ssh && chmod 600 ~/.ssh/*
+            git config --global user.email "wkingluoye@163.com"
+            git config --global user.name "wkingluoye"
+      - name: Build
+          env:
+            NODE_OPTIONS: '--max_old_space_size=4096'
+          run: |
+            yarn install --frozen-lockfile
+            yarn build
+            cp dist/index.html dist/404.html
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
