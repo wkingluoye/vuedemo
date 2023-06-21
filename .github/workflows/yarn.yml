@@ -37,8 +37,6 @@ jobs:
           cache: yarn
 
       - name: Set SSH Environment
-          env:
-            DOCS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           run: |
             mkdir -p ~/.ssh/
             echo "VUE_DEMO_TOKEN" > ~/.ssh/id_rsa
