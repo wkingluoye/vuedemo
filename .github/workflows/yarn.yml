@@ -37,7 +37,9 @@ jobs:
           cache: yarn
 
       - name: Set SSH Environment
-          run: |
+        env:
+          DOCS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        run: |
             mkdir -p ~/.ssh/
             echo "VUE_DEMO_TOKEN" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
@@ -46,9 +48,9 @@ jobs:
             git config --global user.email "wkingluoye@163.com"
             git config --global user.name "wkingluoye"
       - name: Build
-          env:
-            NODE_OPTIONS: '--max_old_space_size=4096'
-          run: |
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+        run: |
             yarn install --frozen-lockfile
             yarn build
             cp dist/index.html dist/404.html
