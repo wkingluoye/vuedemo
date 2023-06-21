@@ -4,9 +4,16 @@
     <h2>By： 星辰千年  开天  HelloWorld</h2>
 
   </div></div>
-  <div class="question-wrapper">
-    <el-input v-model="keyword" class="w-50 m-2" placeholder="Please input" @input="onSearch" clearable :disabled="!isHasData" :prefix-icon="Search" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'')"/>
-
+  <div class="question-wrapper"><el-tooltip
+      class="box-item"
+      effect="light"
+      placement="top-start"
+  >
+    <template #content>
+      只需要输入拼音首字母，不分大小写，最少2个
+    </template>
+      <el-input v-model="keyword" class="w-50 m-2" placeholder="Please input" @input="onSearch" clearable :disabled="!isHasData" :prefix-icon="Search" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'')"/>
+    </el-tooltip>
   </div>
   <div class="search-result">
     <ul>
@@ -188,7 +195,4 @@ h2 {
   color:#6a5acd;
   font-weight: bold;
 }
-
-
-
 </style>
