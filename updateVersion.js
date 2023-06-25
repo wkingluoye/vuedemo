@@ -27,7 +27,6 @@ const getAnswerVersion = () => {
 }
 let av = getAnswerVersion()
 const updateAnswerVersion = () => {
-    console.log(av.lastBuildTime)
     var now = new Date();
     av.lastBuildTime = now.format("yyyy-MM-dd hh:mm:ss")
     fs.writeFile(versionFilePath, JSON.stringify(av, null, '\t'), err => {
