@@ -12,6 +12,7 @@
     <template #content>
       只需要输入拼音首字母，不分大小写，最少2个
       <br>目前收集共【<span style='color:#c90fde'>{{questionList.length}}</span>】题
+      <br>最近更新：<span style='color:#E83329'>{{version.lastBuildTime==null?"":version.lastBuildTime}}</span>
     </template>
       <el-input v-model="keyword" class="w-50 m-2" placeholder="Please input" @input="onSearch" clearable :disabled="!isHasData" :prefix-icon="Search" onkeyup="this.value=this.value.replace(/[^a-zA-Z]/g,'')"/>
     </el-tooltip>
@@ -34,12 +35,14 @@
 // } from 'element-plus'
 // import ref from 'vue'
 import questionData from '../assets/question.json'
+import versionData from '../json/answer_version.json'
+
 export default {
   data(){return {
     questionList:questionData,
     keyword:"",
     // questionUrl:"https://raw.githubusercontent.com/wkingluoye/vuedemo/master/question.json",
-    questionUrl:"./assets/question.json",
+    version:Object,
     isHasData:false,
     resultList:[],
     isDebug:'development' === process.env.NODE_ENV
@@ -49,9 +52,15 @@ export default {
   },
   mounted(){
     this.showLog('Mounted!')
+    this.showVersion()
     this.getQuestionList()
   },
   methods: {
+    showVersion(){
+      Object.assign(this.version, versionData)
+
+      this.showLog(this.version.lastBuildTime)
+    },
     getQuestionList() {
       this.showLog('getRemoteQuestionList!')
       // this.axios.get(this.questionUrl)

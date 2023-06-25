@@ -29,6 +29,13 @@ jobs:
           git config --global user.email "wkingluoye@163.com"
           git config --global user.name "wkingluoye"
 
+      - name: Update Version
+        env:
+          DOCS_DEPLOY_KEY: ${{ secrets.VUE_DEMO_TOKEN }}
+        run: |
+          node .\updateVersion.js
+
+
       - name: Build
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
