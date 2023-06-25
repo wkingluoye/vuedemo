@@ -33,7 +33,7 @@ jobs:
         env:
           DOCS_DEPLOY_KEY: ${{ secrets.VUE_DEMO_TOKEN }}
         run: |
-          node .\updateVersion.js
+          yarn updateVersion
 
 
       - name: Build
