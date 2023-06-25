@@ -2,7 +2,8 @@ let fs = require("fs")
 
 const versionFilePath = './src/json/answer_version.json'
 
-Date.prototype.format = function(format) {
+Date.prototype.format = function(format, GMT=8) {
+    this.setTime(this.getTime() + GMT * 60 * 60 * 1000)
     var o = {
         "M+": this.getMonth() + 1, //month
         "d+": this.getDate(), //day
