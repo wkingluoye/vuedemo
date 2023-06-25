@@ -33,11 +33,13 @@
 //   ElMessage,
 // } from 'element-plus'
 // import ref from 'vue'
+import questionData from '../assets/question.json'
 export default {
   data(){return {
-    questionList:[],
+    questionList:questionData,
     keyword:"",
-    questionUrl:"https://raw.githubusercontent.com/wkingluoye/vuedemo/master/question.json",
+    // questionUrl:"https://raw.githubusercontent.com/wkingluoye/vuedemo/master/question.json",
+    questionUrl:"./assets/question.json",
     isHasData:false,
     resultList:[],
     isDebug:'development' === process.env.NODE_ENV
@@ -47,23 +49,31 @@ export default {
   },
   mounted(){
     this.showLog('Mounted!')
-    this.getRemoteQuestionList()
+    this.getQuestionList()
   },
   methods: {
-    getRemoteQuestionList() {
+    getQuestionList() {
       this.showLog('getRemoteQuestionList!')
-      this.axios.get(this.questionUrl)
-          .then(res=>{
-            this.showLog(res);
-            this.questionList = res.data;
-            for(let i=0;i<this.questionList.length;i++){
-              let questionPY = getPinyin(this.questionList[i].question).toUpperCase()
-              this.questionList[i].questionPY = questionPY
-            }
-            this.showLog(this.questionList);
-            this.isHasData=true;
-            this.showLog(this.isHasData = true)
-        })
+      // this.axios.get(this.questionUrl)
+      //     .then(res=>{
+      //       this.showLog(res);
+      //       this.questionList = res.data;
+      //       for(let i=0;i<this.questionList.length;i++){
+      //         let questionPY = getPinyin(this.questionList[i].question).toUpperCase()
+      //         this.questionList[i].questionPY = questionPY
+      //       }
+      //       this.showLog(this.questionList);
+      //       this.isHasData=true;
+      //       this.showLog(this.isHasData = true)
+      //   })
+      Object.assign(this.questionList, questionData)
+      for(let i=0;i<this.questionList.length;i++){
+        let questionPY = getPinyin(this.questionList[i].question).toUpperCase()
+        this.questionList[i].questionPY = questionPY
+      }
+      this.showLog(this.questionList);
+      this.isHasData=true;
+      this.showLog(this.isHasData = true)
     },
     onSearch(v){
       this.showLog(getPinyin(v).toUpperCase())
