@@ -5,12 +5,12 @@ module.exports = defineConfig({
     pages:{
         index:{
             entry:'./src/main.js',
-            title:'装备灵魂五行模拟器'
+            title:'星辰工具'
         },
-        answer:{
-            entry:'./src/answer.js',
-            title:'星辰答题器'
-        }
+        // answer:{
+        //     entry:'./src/answer.js',
+        //     title:'答题器'
+        // }
     },
     publicPath: process.env.NODE_ENV === 'production'
         ? '/'

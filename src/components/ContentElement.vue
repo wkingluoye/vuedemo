@@ -505,6 +505,10 @@
 <script>
 import UseManual from "@/components/UseManual";
 
+const ELEMENT_DATA = "element_data_key";
+const START_EQUIP = "start_equipment_key";
+const START_ELEMENT = "start_element_key";
+
 export default {
   data(){return {
     elementsOptions : [
@@ -554,14 +558,38 @@ export default {
   },
   created(){
     this.showLog(this.$route.path, "页面开始创建中")
+    let elementData = this.$cookies.get(ELEMENT_DATA)
+    this.showLog(elementData)
+    if(elementData){
+      this.equipmentOptions = JSON.parse(elementData);
+    }
+    let startEquipment = this.$cookies.get(START_EQUIP)
+    this.showLog(startEquipment)
+    if(startEquipment){
+      this.startEquipment = parseInt(startEquipment)
+    }
+    let startElement = this.$cookies.get(START_ELEMENT)
+    this.showLog(startElement)
+    if(startElement){
+      this.startElement = parseInt(startElement)
+    }
+    this.checkElements()
+    if(startEquipment || startElement){
+      this.getSuggestion()
+    }
+
   },
   mounted(){
     this.showLog(this.$route.path, "Mounted")
   },
   methods: {
     handleChange(v) {
+      this.showLog("handleChange",v)
       this.checkElements(v)
       this.getSuggestion()
+      this.$cookies.set(ELEMENT_DATA,JSON.stringify(this.equipmentOptions))
+      this.$cookies.set(START_EQUIP,this.startEquipment)
+      this.$cookies.set(START_ELEMENT,this.startElement)
     },
     reset(){
       for (let j = 0;j<12;j++){
@@ -571,11 +599,12 @@ export default {
       }
       this.checkElements()
       this.getSuggestion()
+      this.$cookies.set(ELEMENT_DATA,JSON.stringify(this.equipmentOptions))
     },
     checkElements(){
       // 判断当前激活状态
       // let tmpModifyList = []
-      console.log(this.equipmentOptions)
+      this.showLog(this.equipmentOptions)
       this.currrentActivatityNum = 0
       for (let j = 0;j<12;j++){
         let cPart = this.equipmentOptions[j]
@@ -593,8 +622,8 @@ export default {
     getSuggestion(){
       // 计算最优激活方案
       this.modifyList = []
-      console.log("起始部位:",this.startEquipment)
-      console.log("起始元素:",this.startElement)
+      this.showLog("起始部位:",this.startEquipment)
+      this.showLog("起始元素:",this.startElement)
       if (this.startEquipment === "") {
         if (this.startElement === "") {
           for(let k = 0;k<12;k++){
@@ -662,7 +691,7 @@ export default {
       }
     },
     useSuggestion(){
-      console.log(this.modifyList)
+      this.showLog(this.modifyList)
       for (let j = 0;j<this.modifyList.length;j++){
         this.equipmentOptions[this.modifyList[j].i].e = this.modifyList[j].n
       }
