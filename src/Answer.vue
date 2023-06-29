@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import InputQuestion from './components/InputQuestion.vue'
+import InputQuestion from './components/ContentQuestion.vue'
 
 export default {
   name: 'App',

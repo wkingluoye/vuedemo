@@ -1,9 +1,4 @@
 <template>
-  <div><h1>星辰答题器</h1>
-  <div class="author">
-    <h2>By： 星辰千年  开天  HelloWorld</h2>
-
-  </div></div>
   <div class="question-wrapper"><el-tooltip
       class="box-item"
       effect="light"
@@ -48,21 +43,20 @@ export default {
     isDebug:'development' === process.env.NODE_ENV
   }},
   created(){
-    this.showLog("页面开始创建中")
+    this.showLog(this.$route.path, "页面开始创建中")
   },
   mounted(){
-    this.showLog('Mounted!')
+    this.showLog(this.$route.path, "Mounted")
     this.showVersion()
     this.getQuestionList()
   },
   methods: {
     showVersion(){
       Object.assign(this.version, versionData)
-
-      this.showLog(this.version.lastBuildTime)
+      this.showLog("lastBuildTime:",this.version.lastBuildTime)
     },
     getQuestionList() {
-      this.showLog('getRemoteQuestionList!')
+      // this.showLog('getRemoteQuestionList!')
       // this.axios.get(this.questionUrl)
       //     .then(res=>{
       //       this.showLog(res);
@@ -82,7 +76,7 @@ export default {
       }
       this.showLog(this.questionList);
       this.isHasData=true;
-      this.showLog(this.isHasData = true)
+      // this.showLog(this.isHasData = true)
     },
     onSearch(v){
       this.showLog(getPinyin(v).toUpperCase())
@@ -106,13 +100,7 @@ export default {
       }
       this.resultList = tmpList
       // this.showLog(tmpList)
-    },
-    showLog(...optionalParams){
-      if(this.isDebug){
-        console.log(optionalParams)
-      }
     }
-
   }
 }
 

@@ -1,12 +1,5 @@
 <template>
   <div class="manual-wrapper">
-    <h1>装备灵魂五行模拟器</h1>
-    <div class="author">
-      <h2>By：</h2>
-      <h2>星辰千年 </h2>
-      <h2>开天 </h2>
-      <h2>HelloWorld</h2>
-    </div>
     <h3>注意事项</h3>
     <ul>
       <li>五行激活顺序：<span class="red">火</span>→<span class="red">雷</span>→<span class="red">风</span>→<span

@@ -1,4 +1,5 @@
 <template>
+  <UseManual/>
 <!--  左侧装备显示区-->
   <div class="skeleton-wrapper">
     <div class="skeleton-box">
@@ -502,9 +503,7 @@
 </template>
 
 <script>
-// import {
-//   ElMessage,
-// } from 'element-plus'
+import UseManual from "@/components/UseManual";
 
 export default {
   data(){return {
@@ -550,11 +549,14 @@ export default {
     startEquipment:'',
     startElement:'',
   }},
+  components: {
+    UseManual,
+  },
   created(){
-    console.log("页面开始创建中")
+    this.showLog(this.$route.path, "页面开始创建中")
   },
   mounted(){
-    console.log('Mounted!')
+    this.showLog(this.$route.path, "Mounted")
   },
   methods: {
     handleChange(v) {
@@ -564,7 +566,6 @@ export default {
     reset(){
       for (let j = 0;j<12;j++){
         let cPart = this.equipmentOptions[j]
-        console.log(cPart)
         cPart.e = ''
         cPart.a = false
       }
