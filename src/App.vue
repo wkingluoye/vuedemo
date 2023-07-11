@@ -109,6 +109,14 @@ export default {
     // }
   }
 }
+
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?eab0269c79fc658690d8b90ccf861ae3";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
 </script>
 
 <style>
