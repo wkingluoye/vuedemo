@@ -31,13 +31,21 @@
                   </el-icon>
                   <span>答题器</span>
                 </el-menu-item>
+                <el-menu-item index="/damage">
+                  <el-icon>
+                    <TrendCharts/>
+                  </el-icon>
+                  <span>伤害图</span>
+                </el-menu-item>
               </el-menu>
             </el-col>
           </el-row>
         </el-aside>
         <el-main>
           <!--          Content-->
-          <router-view></router-view>
+          <el-config-provider :locale="locale">
+            <router-view />
+          </el-config-provider>
         </el-main>
       </el-container>
     </el-container>
@@ -45,17 +53,21 @@
 </template>
 
 <script>
+import { ElConfigProvider } from 'element-plus';
 import ToolHeader from "@/components/ToolHeader";
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 
 export default {
   name: 'App',
   data() {
     return {
       selectedPath: '/',
+      locale: zhCn
     }
   },
   components: {
     ToolHeader,
+    ElConfigProvider
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -97,11 +109,20 @@ export default {
     // }
   }
 }
+
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?eab0269c79fc658690d8b90ccf861ae3";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
 </script>
 
 <style>
 body {
   background: url("./assets/bt_bj.jpg");
+  direction:ltr;
 }
 
 #app {
@@ -125,7 +146,6 @@ body {
 .el-row {
   height: 100%;
   width: 100%;
-  display: block;
 }
 
 .el-col-12 {
